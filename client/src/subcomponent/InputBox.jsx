@@ -3,37 +3,36 @@ import React, { useState, useEffect } from 'react';
 function InputBox() {
   const [clicked, setClicked] = useState(false);
   const [input, setInput] = useState([]);
-  const [parry, setParry] = useState(0);
-
+  const [parry, setParry] = useState([]);
+  //To-do: deal with multiple key presses for high low parries;
   function keyDown (e) {
-    if (e.repeat) {
+    if (e.repeat || !['d', 's'].includes(e.key)) {
       return;
     }
-    setParry(0);
     setInput([[e.key, e.timeStamp], ...input]);
   }
   function keyUp (e) {
-    // console.log(e.key, e.timeStamp);
+    if (!['d','s'].includes(e.key))  {
+      return;
+    }
     console.log('I am the timestamp difference', e.timeStamp - input[0][1]);
     setInput([[`released ${e.key}`, e.timeStamp], ...input]);
-    setParry(e.timeStamp - input[0][timeStamp]);
+    setParry(e.timeStamp - input[0][1]);
   }
-  function focusHandler(e) {
-    console.log('this element is now in focus', e);
-  }
+
   function showInputs() {
-    if ()
     return input.map((item) => {
       return (
-      <div>
-        {item[0]} {item[1]} {parry !== 0 ? `this is parry ${parry}` : null}
-      </div>
+        <div>
+          {item[0]} {item[1]}
+        </div>
       )
     })
   }
+
   return (
-    <div className='box' onClick={focusHandler} onKeyDown={keyDown} onKeyUp={keyUp} tabindex='0'>
-      <div className='boxText'>Parry Timing</div>
+    <div className='box' onKeyDown={keyDown} onKeyUp={keyUp} tabIndex='0'>
+      <div className='boxText'>{`Parry timing is ${parry}ms`} {parry > 320 ? 'too slow' : null}</div>
       {showInputs()}
     </div>
   )
