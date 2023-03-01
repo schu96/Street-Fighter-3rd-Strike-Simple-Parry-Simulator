@@ -1,0 +1,36 @@
+{
+  "name": "mvp23",
+  "version": "1.0.0",
+  "description": "HackReactor MVP 2023 Project",
+  "main": "index.js",
+  "scripts": {
+    "react-dev": "webpack --mode development --watch",
+    "server-dev": "npx nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schu96/MVP23.git"
+  },
+  "author": "Sandy Chu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/schu96/MVP23/issues"
+  },
+  "homepage": "https://github.com/schu96/MVP23#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
+    "babel-loader": "^8.2.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^4.2.0"
+  },
+  "dependencies": {
+    "axios": "^1.2.4",
+    "babel": "^6.23.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
