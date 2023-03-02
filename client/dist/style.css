@@ -17,4 +17,10 @@ canvas {
   padding: 0;
   overflow-y:scroll;
   scrollbar-width: none;
-  }
+}
+
+.leggoJustin {
+  display: block;
+  margin: auto;
+  margin-top: 20px;
+}
