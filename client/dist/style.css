@@ -1,6 +1,6 @@
 body {
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  background-color: var(--bg);
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: beige;
   display: block;
   padding: 10px;
 }
@@ -9,18 +9,35 @@ canvas {
   border: 1px solid black;
 }
 
+figcaption {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
+  font-style: italic;
+}
 .box {
   width: 300px;
-  height: 300px;
+  height: 175px;
   border: 1px solid black;
-  margin: 0;
-  padding: 0;
+  margin: 0px 0px 20px 0px;
+  padding: 5px;
   overflow-y:scroll;
   scrollbar-width: none;
+  background-color: white;
 }
 
 .leggoJustin {
   display: block;
   margin: auto;
   margin-top: 20px;
+}
+
+.yunP {
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+.yunCaption {
+  width: 300px;
+  margin-left:auto;
+  margin-right:auto;
 }
