@@ -122,7 +122,9 @@ function App() {
     <>
       <Canvas />
       <InputBox setUserInput={setUserInput} frameData={frameData}/>
-      <img src={gif}></img>
+      <div style={{backgroundColor: 'black', width: 450, height: 150}}>
+        <img src={gif} style={{marginTop: 5, marginLeft: 15}}/>
+      </div>
       <br/>
       <select name="charDropdown" onChange={handleChar}>
         <option value="">--Select a character--</option>

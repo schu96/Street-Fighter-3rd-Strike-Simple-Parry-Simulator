@@ -66,7 +66,7 @@ function Canvas () {
     <div className="pLook">
       <h3>Test Your Timing</h3>
        <p>
-        Use your keyboard to try it out! The InputBox can read your keyboard input ('d', 's', right arrow, left arrow) and visualize the timing between your inputs and a character move of your choice. This is very scuffed right now so pls be nice.
+        Use your keyboard to try it out! The InputBox can read your keyboard input ('d', 's', right arrow, left arrow) and visualize the timing between your inputs and a character move of your choice.
        </p>
     </div>
     </>

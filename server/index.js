@@ -19,7 +19,6 @@ app.get('/getFrames/:character/:moveName/:variant', async (req, res) => {
 })
 
 app.get('/getCharMoves/:character', async (req, res) => {
-  console.log(req.params);
   const output = await movelist.find({character: req.params.character});
   console.log('this should be sent out', output);
   res.status(200).send(output);
