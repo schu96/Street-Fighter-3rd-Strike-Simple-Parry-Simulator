@@ -12,7 +12,7 @@ mongoose.connect('mongodb://localhost:27017/parry',
 });
 
 
-let threeS = mongoose.Schema({
+let threeS = new mongoose.Schema({
   character: {type: String, index: true},
   moveName: String,
   moveList: [],
@@ -20,7 +20,7 @@ let threeS = mongoose.Schema({
   url: String
 });
 
-let Movelist = mongoose.model('movelist', threeS, 'movelist');
+let Movelist = new mongoose.model('movelist', threeS, 'movelist');
 
 let save = (character, moveName, moveList, url) => {
   const newMove = new Movelist();
@@ -36,5 +36,5 @@ let save = (character, moveName, moveList, url) => {
 };
 
 module.exports.save = save;
+module.exports = Movelist;
 module.exports.movelist = Movelist;
-

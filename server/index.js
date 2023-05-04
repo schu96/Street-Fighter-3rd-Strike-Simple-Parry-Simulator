@@ -1,11 +1,14 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const {save, movelist} = require(path.join(__dirname, 'db.js'));
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
+app.set('port', process.env.PORT);
 app.use('/', express.static(path.join(__dirname, '../client/dist')));
 
 app.post('/addMove', async (req, res) => {
@@ -15,12 +18,13 @@ app.post('/addMove', async (req, res) => {
 
 app.get('/getFrames/:character/:moveName/:variant', async (req, res) => {
   const output = await movelist.findOne({character: req.params.character, moveName: req.params.moveName, variant: req.params.variant});
+  console.log('what is the output from this', output);
   res.status(200).send(output);
 })
 
 app.get('/getCharMoves/:character', async (req, res) => {
   const output = await movelist.find({character: req.params.character});
-  console.log('this should be sent out', output);
+  // console.log('this should be sent out', output);
   res.status(200).send(output);
 })
 

@@ -46,7 +46,7 @@ function Canvas () {
         Parried projectiles and the parrier will be frozen in place but the attacker will not be frozen.
         <br/>
         A failed attempt will cause a player to take 100% damage from an attack
-        compared to 16% - 25% damage while blocking.
+        compared to 16% - 25% chip damage sustained while blocking.
         </p>
       <figure>
         <img className="yunP"src='https://media.tenor.com/hTxXbEMW33MAAAAd/street-fighter-3rd-strike.gif' height='200' width='300'/>
