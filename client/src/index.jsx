@@ -93,7 +93,9 @@ function App() {
       setTimeout(() => { active.push(0); },
       frameData[active.length] - frameData[active.length - 1 < 0 ? 0 : active.length - 1]);
     }
-    else { reachedSize = true; }
+    else {
+      reachedSize = true;
+    }
     if (active.length === 0) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       stop();
