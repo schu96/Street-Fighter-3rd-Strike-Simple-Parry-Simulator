@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import axios from 'axios';
+// ReactDOM.render no longer supported in React18
 
 import InputBox from './subcomponent/InputBox.jsx';
 import Canvas from './subcomponent/Canvas.jsx';
@@ -12,7 +13,7 @@ function App() {
   const [moveName, setMoveName] = useState('');
   const [movesList, setMovesList] = useState({});
   const [frameData, setFrameData] = useState([]);
-  const [addStartDelay, setAddStartDelay] = useState(false);
+  const [addStartDelay, setAddStartDelay] = useState('init');
   const [gif, setGif] = useState('');
   const [gifList, setGifList] = useState({});
   const CHARS = ['Akuma', 'Alex', 'Chun-Li', 'Dudley', 'Elena', 'Hugo', 'Ibuki', 'Ken', 'Makoto', 'Necro', 'Oro', 'Q', 'Remy', 'Ryu', 'Sean', 'Twelve', 'Urien', 'Yang', 'Yun'];
@@ -23,6 +24,8 @@ function App() {
   let active = [0];
 
   useEffect(() => {
+    reset()
+    setAddStartDelay('init')
     setMoveName('');
     if (movesList[character] === undefined) {
       axios.get(`/getCharMoves/${character}`)
@@ -41,7 +44,6 @@ function App() {
             gifs[obj.moveName] = obj.url;
           })
           const def = data.data[0];
-          // setMoveName(def.moveName);
           setFrameData(def.moveList);
           setGif(def.url);
           setMovesList(moves);
@@ -53,17 +55,18 @@ function App() {
   }, [character])
 
   useEffect(() => {
-    if (movesList[character]){
-      console.log('change with moveName state', movesList[character][moveName]);
+    setAddStartDelay('init')
+    if (movesList[character]) {
       setFrameData(movesList[character][moveName])
     }
     if (gifList) {
       setGif(gifList[moveName]);
     }
+    show()
   }, [moveName])
 
   useEffect(() => {
-    if (frameData.length !== 0) {
+    if (addStartDelay !== 'init' && frameData.length !== 0) {
       let temp = [...frameData];
       temp = temp.map((frame) => {
         if (frame === 0) {
@@ -107,8 +110,17 @@ function App() {
     reachedSize = false;
     active = [frameData[0]];
   }
-  function reset() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
-  function delay() { setAddStartDelay(!addStartDelay); }
+  function reset() {
+    stop()
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+   }
+  function delay() {
+    if (addStartDelay === 'init') {
+      setAddStartDelay(true);
+    } else {
+      setAddStartDelay(!addStartDelay);
+    }
+  }
   function show() {
     if (frameData.length === 0) { return; }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -139,13 +151,13 @@ function App() {
     }
   }
   function handleChar(e) { setCharacter(e.target.value); }
-  function handleMove(e) { setMoveName(e.target.value); }
+  function handleMove(e) { setMoveName(e.target.value);}
   return (
     <>
       <Canvas />
       <InputBox setUserInput={setUserInput} frameData={frameData}/>
-      <div style={{backgroundColor: 'black', width: 450, height: 175}}>
-        <img src={gif} style={{marginTop: 5, marginLeft: 15}}/>
+      <div className="moveContainer">
+        <img className="gifMove" src={gif}/>
       </div>
       <br/>
       <select name="charDropdown" onChange={handleChar}>
@@ -156,21 +168,23 @@ function App() {
         <option>--Select a move--</option>
         {moveDropdown()}
       </select>
-      <select name="variant" onChange={()=> {}}>
-        <option value="">--Select a variant--</option>
-        {}
-      </select>
       <br/>
       <button type="submit" onClick={play}>Animate Frames</button>
       <button type="submit" onClick={stop}>Pause</button>
       <button type="submit" onClick={reset}>Clear</button>
       <button type="submit" onClick={show}>Show Frames</button>
       <button type="submit" onClick={delay}>
-        {addStartDelay ? 'Remove 100 frame delay' : 'Add 100 frame delay'}
+        {addStartDelay !== 'init' && addStartDelay ? 'Remove 100 frame delay' : 'Add 100 frame delay'}
       </button>
       <br/>
     </>
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+// const container = document.getElementById('app');
+// const root = createRoot(container);
+// root.render(<App />);
+createRoot(document.getElementById('app')).render(<App />);
+
+// React17 render
+// ReactDOM.render(<App />, document.getElementById('app'));

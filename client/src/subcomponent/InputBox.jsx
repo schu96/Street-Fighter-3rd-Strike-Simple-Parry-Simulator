@@ -39,8 +39,18 @@ function InputBox({setUserInput, frameData}) {
   function show() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     timing.forEach(x => {
+      if (x !== 0) {
+        ctx.fillStyle = 'lightgreen';
+        ctx.lineCap = 'round';
+        ctx.fillRect(x - 4.5, 0, 4.5, canvas.height);
+        ctx.fillStyle = 'orange';
+        ctx.fillRect(x + 4.5, 0, -4.5, canvas.height);
+      }
+      ctx.fillStyle = 'blue';
+      ctx.lineCap = 'butt';
       ctx.fillRect(x, 0, size, canvas.height);
     });
+    compare();
   }
   // function play() {
   //   if (timing.length !== frameData.length) {
@@ -117,7 +127,7 @@ function InputBox({setUserInput, frameData}) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#07C';
     ctx.lineCap = 'round';
-    ctx.shadowBlur = 18;
+    // ctx.shadowBlur = 18;
     ctx.shadowColor = "#07C";
     ctx.fillRect(x, 0, size, canvas.height);
 
@@ -135,6 +145,21 @@ function InputBox({setUserInput, frameData}) {
     setTiming([0]);
   }
 
+  function compare() {
+    if (timing.length == frameData.length) {
+      const onTime = [];
+      const offTime = [];
+      timing.forEach((frame, index) => {
+        if (frame <= frameData[index] && frame >= (frameData[index] - 10)) {
+          onTime.push(frame);
+        } else {
+          offTime.push(frame);
+        }
+      })
+      console.log(onTime, frameData);
+    }
+  }
+
   return (
     <div className='box' onKeyDown={keyDown} onKeyUp={keyUp} tabIndex='0'>
       <div className='boxText'>{`Parry timing is ${parry}ms`} {parry > 320 ? 'too slow' : null}</div>
@@ -146,7 +171,7 @@ function InputBox({setUserInput, frameData}) {
       <br/><br/>
       <button type='submit' onClick={timer} disabled={timerButton || timing.length > 1}>Start recording</button>
       <button type='submit' onClick={show}>Show my inputs</button>
-      <button type='submit' onClick={reset}>Reset</button>
+      <button type='submit' onClick={reset}>Clear my inputs</button>
     </div>
   )
 };
